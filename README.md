@@ -61,11 +61,16 @@ Biological implications of the DEGs were characterized using the clusterProfiler
 After the data has been downloaded in a fastq format, fastQC was employed on each of the nine samples to ensure the quality of the raw reads, confirming the mean sequence quality (Phred scores) and the absence of significant adapter contamination before proceeding to alignment. It is of great importance to carry out this phase to ensure that other downstream analysis encounter little or no errors.
 Following alignment with STAR and quantification via RSEM, Principal Component Analysis (PCA), a dimensionality reduction was performed to assess the overall data structure.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Screenshot%20from%202026-03-01%2001-10-42.png)
+**Figure 1**: output of the sequence counts using multiq plots for the nine samples
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Screenshot%20from%202026-03-01%2012-29-52.png)
+**Figure 2**: Image showing high values of the phred scores
 In figure 3, it could be seen that the three replicates for each group (the dots of the same color) are tightly packed together which shows high reproducibility. The PCA plot clearly demonstrates a progressive transcriptomic shift along PC1, accounting for 71% of the total variance. This separation strongly correlates with the chemical metadata; as the environment moves from an Early stage with 12.4% ethanol to a Mature stage of 9.6% characterized by extreme aldehyde toxicity (668.8 mg/l) and total glucose depletion.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot.png)
+**Figure 3**: PCA plots showing the clustering of the three stages in triplicates; overall data structure
 ## Differential Gene Expression Analysis
 Two pairwise comparisons were conducted to capture the evolution of the biofilm: Thin vs. Early and Mature vs. Early. Using a threshold of padj< 0.05 and absolute log2FC > 1, this resulted into several thousand differentially expressed genes (DEGs) of about 6807 genes.
+
+**Table 1**:Summary of overall differentially expressed genes
 |6807 genes|Mature Vs Early|Thin Vs Early|
 |:---|---|---:|
 |Padj|<0.05|<0.05|
@@ -77,18 +82,23 @@ Two pairwise comparisons were conducted to capture the evolution of the biofilm:
 MA plots demonstrated symmetric distributions of log2 fold changes around zero, with a substantial proportion of genes exhibiting large effect sizes (|log2FC| > 1). In figure 4, it shows a significant increase in red points (significant genes). This shows that as the biofilm matures, more genes are recruited into the survival response even as the condition became unfavorable. Similar to the findings by Mardanov et al. (2020), the surge in significant genes in the Mature stage directly correlates with the "hostile" high-aldehyde environment described in the study.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot01.png)
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot02.png)
+**Figure 4**: These plots display the relationship between the mean of normalized counts and the log2 fold change for the Thin vs. Early and Mature Vs Early comparison. Red points indicate genes significantly differentially expressed at padj< 0.05
 ### Volcano Plot
 The volcano plot visualizes the statistical significance against the magnitude of change for the Mature vs. Early comparison. Red points represent significantly Upregulated genes, while blue points represent Downregulated genes padj < 0.05, log2FC > 1. This result illustrates a huge transcriptomic shift. A significant number of genes were upregulated, reflecting a proactive response to the increasingly hostile environment. Specifically, the magnitude of change was most pronounced in genes related to stress response, coinciding with the peak Aldehyde concentration of 668.8 mg/l and total Glucose depletion (< 0.1 g/l) observed in the chemical metadata.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot03.png)
+**Figure 5**: Volcano Plots showing the Magnitude and Significance of the Mature Biofilm Response
 ### Heatmap
 These top 10 genes represent the strongest biological responses to the 109-day maturation period. It could be seen in figure 6 that there is a difference between the Early (green) and Mature (red) columns. The top genes like IRT1 and ETS2-1 are highly upregulated (red) in the mature phase but downregulated (blue) in the early phase.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot04.png)
+**Figure 6**: Heatmap of the Top 10 Differentially Expressed Genes. 
 ### Venn Diagram
 The Venn diagram illustrates the distribution of DEGs (padj < 0.05, |log2FC| > 1) for the Thin vs. Early and Mature vs. Early comparisons. While 728 genes represent a core biofilm response, the 1,347 genes unique to the Mature stage highlight the extensive metabolic recruitment required to survive peak aldehyde toxicity and nutrient starvation at maturation.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot05.png)
+**Figure 7**: Overlap of Differentially Expressed Genes across Biofilm Maturation. 
 ### Functional Annotation
 The Over-Representation Analysis (ORA) provides the biological reason behind the shift in the stages of development. In the Thin stage, the high significance of "carbohydrate catabolic processes" confirms that the yeast tried to source for energy as the glucose level dropped. By the time it got to the matured stage, it could be seen in the parameter (Energy derivation by oxidation of organic compounds) that the yeast has already gotten a new source of energy. As noted by Mardanov et al. (2020), flor yeast must transition to the aerobic oxidation of secondary carbon sources to survive. The additional metadata provide the molecular evidence for this, as the yeast maintains energy production through the consumption of Ethanol (decreasing from 12.4% to 9.6%) and Glycerol (8.5 to 6.8 g/l) once primary sugars are exhausted. There is another parameter that is worthy of note, Transmembrane transport; this remained constant through the development, which could indicate that the yeast is constantly modifying its cell wall.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Rplot06.png)
+**Figure 8**: The dot plot displays the top enriched Biological Processes for the Thin and Mature clusters. The size of the dot represents the GeneRatio, while the color indicates the adjusted p-value
 # Conlusion
 This study successfully implemented a STAR-RSEM-DESeq2 pipeline to investigate the transcriptomic shift of Saccharomyces cerevisiae during biofilm (velum) maturation. The analysis revealed that the transition from Early to Mature stages is not merely a cessation of growth, but an innate metabolic adaptation. The differential expression of key genes, visualized through PCA, heatmaps and Volcano plots, highlights the yeast's response to the harsh environment of wine aging. Ultimately, these results demonstrate how S. cerevisiae manages the delicate balance of protecting wine from oxidation while surviving extreme chemical conditions.
 # References
