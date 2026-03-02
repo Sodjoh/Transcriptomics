@@ -61,4 +61,6 @@ Biological implications of the DEGs were characterized using the clusterProfiler
 After the data has been downloaded in a fastq format, fastQC was employed on each of the nine samples to ensure the quality of the raw reads, confirming the mean sequence quality (Phred scores) and the absence of significant adapter contamination before proceeding to alignment. It is of great importance to carry out this phase to ensure that other downstream analysis encounter little or no errors.
 Following alignment with STAR and quantification via RSEM, Principal Component Analysis (PCA), a dimensionality reduction was performed to assess the overall data structure.
 ![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Screenshot%20from%202026-03-01%2012-29-52.png)
-![image_alt](
+![image_alt](https://github.com/Sodjoh/Transcriptomics/blob/main/Screenshot%20from%202026-03-01%2001-10-42.png)
+In figure 3, it could be seen that the three replicates for each group (the dots of the same color) are tightly packed together which shows high reproducibility. The PCA plot clearly demonstrates a progressive transcriptomic shift along PC1, accounting for 71% of the total variance. This separation strongly correlates with the chemical metadata; as the environment moves from an Early stage with 12.4% ethanol to a Mature stage of 9.6% characterized by extreme aldehyde toxicity (668.8 mg/l) and total glucose depletion.
+
