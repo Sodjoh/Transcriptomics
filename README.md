@@ -9,25 +9,33 @@ High-throughput RNA sequencing (RNA-seq) provides a powerful approach for quanti
 # Methodology
 ## Data acquisition
 The dataset of the Saccharomyces cerevisiae flor yeast strain (PRJNA592304) was gotten from the NCBI SRA and the nine samples divided across three stages were downloaded. The raw sequence data was then retrieved into a FASTQ format using the fasterq-dump utility from the SRA Toolkit. The reference genome and annotation were also downloaded from the data base in fasta and gtf format.
+``` bash
 fasterq-dump --split-files – “each sample name”
+```
 ## Quality Control
 Initial sequence quality was assessed using FastQC (v0.12.1) to evaluate per-base quality scores, GC content, adapter contamination and other parameters. This is further viewed using multiplot to view the nine samples. 
-fastqc *.fastq -t 4 -o 
-
+```bash
+fastqc *.fastq -t 4 -o
+```
 ## Genomic Alignment and Quantification
 Reads were mapped to the Saccharomyces cerevisiae reference genome (R64-1-1) using STAR (Spliced Transcripts Alignment to a Reference, v2.7.11b). STAR was selected for its splice-aware alignment capabilities, which are essential for accurately mapping eukaryotic transcripts that may contain introns. Following alignment, transcript abundance was quantified using RSEM (RNA-Seq by Expectation-Maximization, v1.3.3). RSEM provides gene-level counts, producing a raw count matrix for downstream analysis. So the star index was built with this;
+``` bash
 STAR \
   --runThreadN 4 \
   --genomeDir ../star_index \
   --readFilesIn SRR10551657.fastq \
   --outFileNamePrefix ../star_alignments/SRR10551657_ \
   --outSAMtype BAM SortedByCoordinate
+```
 After which the RSEM reference was prepared; 
+```bash
 rsem-prepare-reference \
   --gtf Saccharomyces_cerevisiae.R64-1-1.113.gtf \
   Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa \
   rsem_reference/yeast_R64
-which was followed my rsem calculate expression
+```
+which was followed my rsem calculate expression;
+```bash
 rsem-calculate-expression \
   --star \
   --estimate-rspd \
@@ -35,16 +43,17 @@ rsem-calculate-expression \
   ~/yeast_biofilm/raw_data/SRR10551657.fastq \
   rsem_reference \
   SRR10551657
-
-
+```
 ## Differential Expression Analysis
 Statistical analysis was performed in the R studio. Transcript-level estimates from RSEM were imported into the DESeq2 using tximport. DESeq2 was chosen because it employs a negative binomial distribution model and empirical Bayes shrinkage to estimate dispersions and fold changes (Love et al., 2015).
+```bash
 dir <- "~/ubunututo windows/rsem_output"
 samples <- read.csv("~/ubunututo windows/metadata.csv")
 files <- file.path(dir, paste0(samples$sample, ".genes.results"))
 names(files) <- samples$sample
-#Import data using trixmport
+Import data using trixmport
 txi.rsem <- tximport(files, type = "rsem", txIn = FALSE, txOut = FALSE)
+```
 ## Functional Annotation and Over-Representation Analysis (ORA)
 Biological implications of the DEGs were characterized using the clusterProfiler package on R. Afterwards, Over-Representation Analysis (ORA) based on the Gene Ontology (GO) database was performed focusing on Biological Processes (BP). The org.Sc.sgd.db package provided the yeast-specific genome annotations (Wu et al., 2021).
 
