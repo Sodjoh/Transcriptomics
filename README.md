@@ -56,4 +56,9 @@ txi.rsem <- tximport(files, type = "rsem", txIn = FALSE, txOut = FALSE)
 ```
 ## Functional Annotation and Over-Representation Analysis (ORA)
 Biological implications of the DEGs were characterized using the clusterProfiler package on R. Afterwards, Over-Representation Analysis (ORA) based on the Gene Ontology (GO) database was performed focusing on Biological Processes (BP). The org.Sc.sgd.db package provided the yeast-specific genome annotations (Wu et al., 2021).
+# Results and Discussion 
+## Data Quality and Transcriptomic Structure
+After the data has been downloaded in a fastq format, fastQC was employed on each of the nine samples to ensure the quality of the raw reads, confirming the mean sequence quality (Phred scores) and the absence of significant adapter contamination before proceeding to alignment. It is of great importance to carry out this phase to ensure that other downstream analysis encounter little or no errors.
+Following alignment with STAR and quantification via RSEM, Principal Component Analysis (PCA), a dimensionality reduction was performed to assess the overall data structure.
+![image_alt]
 
